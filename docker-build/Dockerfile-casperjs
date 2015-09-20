@@ -1,0 +1,14 @@
+# casperjs
+#
+# VERSION 1.1b3
+#
+FROM arkii/phantomjs:1.9.7
+MAINTAINER  Arkii sqy6@163.com
+
+WORKDIR /src
+
+COPY ./casperjs-1.1b3 /opt/casperjs-1.1b3
+RUN ln -sf /opt/casperjs-1.1b3/bin/casperjs /usr/bin/casperjs
+
+ENTRYPOINT ["/usr/bin/casperjs"]
+CMD ["--help"]

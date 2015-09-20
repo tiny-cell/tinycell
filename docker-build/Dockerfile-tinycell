@@ -1,0 +1,25 @@
+# TinyCell
+#
+# VERSION 0.2
+FROM arkii/casperjs:1.1b3
+MAINTAINER  Arkii sqy6@163.com
+
+WORKDIR /src
+
+RUN set -x \
+        && echo 'Asia/Shanghai' > /etc/timezone \
+        && /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+        && yum -y install epel-release \
+        && mkdir ~/.pip
+
+COPY ./pip.conf ~/.pip/pip.conf
+COPY ./CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
+COPY ./epel.repo /etc/yum.repos.d/epel.repo
+#COPY ./run.sh /run.sh
+
+RUN set -x \
+        && yum -y install python-setuptools python-pip python-gunicorn libevent libevent-devel \
+        && pip install Flask \
+        && rm -rf /var/lib/yum/*
+CMD /run.sh
+EXPOSE 80 5000 8000 8080

@@ -1,0 +1,28 @@
+elasticsearch:
+  image: arkii/elasticsearch
+  ports: 
+    - "9200:9200"
+    - "9300:9300"
+  dns: 172.17.42.1
+  volumes_from:
+    - data
+  environment:
+    - ES_CLASSPATH=/elasticsearch/lib
+    - ES_HOME=/elasticsearch
+    - MAX_MAP_COUNT=262144
+    - MAX_OPEN_FILES=65535
+    - LOG_DIR=/srv/elasticsearch/log
+    - DATA_DIR=/srv/elasticsearch/data
+    - WORK_DIR=/srv/elasticsearch/tmp
+    - CONF_DIR=/srv/elasticsearch/conf
+    - CONF_FILE=/srv/elasticsearch/conf/elasticsearch.yml
+    - ES_USER=elasticsearch
+    - JAVA_HOME=/usr/java/default
+    - JRE_HOME=${JAVA_HOME}/jre
+    - CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+    - PATH=/sbin:/usr/sbin:/bin:/usr/bin:${JAVA_HOME}/bin
+
+data:
+  image: busybox
+  volumes:
+    - /srv/elasticsearch:/srv/elasticsearch

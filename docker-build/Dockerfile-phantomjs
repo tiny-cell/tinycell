@@ -1,0 +1,22 @@
+# phantomjs
+#
+# VERSION 2.0
+FROM centos:7
+MAINTAINER  Arkii sqy6@163.com
+
+WORKDIR /src
+
+RUN set -x \
+        && echo 'Asia/Shanghai' > /etc/timezone \
+        && /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+#COPY ./CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
+#COPY ./epel.repo /etc/yum.repos.d/epel.repo
+COPY ./phantomjs-1.9.7-linux-x86_64 /usr/bin/phantomjs
+
+RUN set -x \
+        # for 2.0 && yum install -y libicu fontconfig libjpeg-turbo libpng \
+        && yum install -y freetype fontconfig \
+        && rm -rf /var/lib/yum/*
+ENTRYPOINT ["/usr/bin/phantomjs"]
+CMD ["--help"]
